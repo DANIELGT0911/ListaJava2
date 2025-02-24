@@ -1,0 +1,86 @@
+class ListaArrayString {
+    private String[] array;
+    private int tamanho;
+
+    public ListaArrayString(int capacidade) {
+        this.array = new String[capacidade];
+        this.tamanho = 0;
+    }
+
+    // Adiciona um nome à lista
+    public void adicionar(String elemento) {
+        if (tamanho == array.length) {
+            System.out.println("Erro: Lista cheia!");
+            return;
+        }
+        array[tamanho++] = elemento;
+    }
+
+    // Remove um nome pelo índice
+    public void remover(int posicao) {
+        if (posicao < 0 || posicao >= tamanho) {
+            System.out.println("Erro: Posição inválida!");
+            return;
+        }
+        for (int i = posicao; i < tamanho - 1; i++) {
+            array[i] = array[i + 1];
+        }
+        tamanho--;
+    }
+
+    // Busca um nome na lista e retorna sua posição
+    public int buscar(String nome) {
+        for (int i = 0; i < tamanho; i++) {
+            if (array[i].equalsIgnoreCase(nome)) {
+                return i; // Retorna a posição do nome encontrado
+            }
+        }
+        return -1; // Retorna -1 se o nome não estiver na lista
+    }
+
+    // Imprime todos os nomes da lista
+    public void imprimirLista() {
+        System.out.print("Lista de Nomes: ");
+        for (int i = 0; i < tamanho; i++) {
+            System.out.print(array[i] + " ");
+        }
+        System.out.println();
+    }
+}
+
+public class TesteListaString {
+    public static void main(String[] args) {
+        ListaArrayString lista = new ListaArrayString(6);
+
+        // Adicionando mais nomes à lista
+        lista.adicionar("Ana");
+        lista.adicionar("Bruno");
+        lista.adicionar("Carlos");
+        lista.adicionar("Daniela");
+        lista.adicionar("Eduardo");
+
+        lista.imprimirLista(); // Lista: Ana Bruno Carlos Daniela Eduardo
+
+        // Removendo um nome pelo índice
+        lista.remover(1);
+        lista.imprimirLista(); // Lista: Ana Carlos Daniela Eduardo
+
+        // Testando a busca de nomes
+        String nomeBusca = "Daniela";
+        int posicao = lista.buscar(nomeBusca);
+        if (posicao != -1) {
+            System.out.println("Nome '" + nomeBusca + "' encontrado na posição: " + posicao);
+        } else {
+            System.out.println("Nome '" + nomeBusca + "' não encontrado.");
+        }
+
+        // Testando um nome que não existe na lista
+        nomeBusca = "Felipe";
+        posicao = lista.buscar(nomeBusca);
+        if (posicao != -1) {
+            System.out.println("Nome '" + nomeBusca + "' encontrado na posição: " + posicao);
+        } else {
+            System.out.println("Nome '" + nomeBusca + "' não encontrado.");
+        }
+    }
+}
