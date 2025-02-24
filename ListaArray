@@ -1,0 +1,78 @@
+class ListaArray {
+    private int[] array;
+    private int tamanho;
+
+    public ListaArray(int capacidade) {
+        this.array = new int[capacidade];
+        this.tamanho = 0;
+    }
+
+    // Adiciona um elemento ao final da lista
+    public void adicionar(int elemento) {
+        if (tamanho == array.length) {
+            System.out.println("Erro: Lista cheia!");
+            return;
+        }
+        array[tamanho++] = elemento;
+    }
+
+    // Adiciona um elemento em uma posição específica
+    public void adicionarEmPosicao(int elemento, int posicao) {
+        if (posicao < 0 || posicao > tamanho || tamanho == array.length) {
+            System.out.println("Erro: Posição inválida ou lista cheia!");
+            return;
+        }
+        
+        // Desloca os elementos para a direita para abrir espaço
+        for (int i = tamanho; i > posicao; i--) {
+            array[i] = array[i - 1];
+        }
+        
+        // Insere o novo elemento na posição desejada
+        array[posicao] = elemento;
+        tamanho++;
+    }
+
+    // Remove um elemento de uma posição específica
+    public void remover(int posicao) {
+        if (posicao < 0 || posicao >= tamanho) {
+            System.out.println("Erro: Posição inválida!");
+            return;
+        }
+
+        // Desloca os elementos para a esquerda para preencher o espaço
+        for (int i = posicao; i < tamanho - 1; i++) {
+            array[i] = array[i + 1];
+        }
+        tamanho--;
+    }
+
+    // Imprime todos os elementos da lista
+    public void imprimirLista() {
+        System.out.print("Lista: ");
+        for (int i = 0; i < tamanho; i++) {
+            System.out.print(array[i] + " ");
+        }
+        System.out.println();
+    }
+}
+
+public class TesteLista {
+    public static void main(String[] args) {
+        ListaArray lista = new ListaArray(5);
+        
+        // Teste de adicionar elementos
+        lista.adicionar(10);
+        lista.adicionar(20);
+        lista.adicionar(30);
+        lista.imprimirLista(); // Lista: 10 20 30
+        
+        // Teste de adicionar em posição específica
+        lista.adicionarEmPosicao(15, 1);  // Adiciona 15 na posição 1
+        lista.imprimirLista(); // Lista: 10 15 20 30
+        
+        // Teste de remover elemento
+        lista.remover(2);  // Remove o elemento na posição 2
+        lista.imprimirLista(); // Lista: 10 15 30
+    }
+}
